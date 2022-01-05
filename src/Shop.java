@@ -12,7 +12,7 @@ public class Shop {
 
     public void crateAccount (){
         Scanner scanner = new Scanner(System.in);
-        
+
         String firstName;
         String lastName;
         String userName;
@@ -27,13 +27,13 @@ public class Shop {
         userType = scanner.nextInt();
         do {
             System.out.println("Enter your first name: ");
-            firstName = scanner.nextLine(); 
-        }while (Character.)
-        
+            firstName = scanner.nextLine();
+        }while (firstName.equals("uyuyu"));
+
 
         System.out.println("Enter your last Name : ");
         lastName = scanner.nextLine();
-        
+
 
 
 
