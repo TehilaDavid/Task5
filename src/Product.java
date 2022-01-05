@@ -10,6 +10,7 @@ public class Product {
         this.price = price;
         this.discountPercentages = discountPercentages;
         isInStock = true;
+        System.out.println();
     }
 
 
