@@ -15,11 +15,11 @@ public class Customer {
     }
 
     public String getFirstName () {
-        return firstName;
+        return this.firstName;
     }
 
     public String getLastName () {
-        return lastName;
+        return this.lastName;
     }
 
     public String getUsername () {
@@ -28,6 +28,10 @@ public class Customer {
 
     public String getPassword () {
         return this.password;
+    }
+
+    public boolean isClubMember () {
+        return this.isClubMember;
     }
 
 

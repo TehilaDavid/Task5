@@ -6,6 +6,10 @@ public class Employee extends Customer{
         this.rank = rank;
     }
 
+    public int getRank () {
+        return rank;
+    }
+
 
     public String toString () {
         return "";
