@@ -6,16 +6,19 @@ public class Shop {
     private Product[] products;
 
     public Shop() {
-        this.employees = new Employee[0];
+//        this.employees = new Employee[0];
 //        this.customers = new Customer[0];
 //        this.products = new Product[0];
-        Customer customer1 = new Customer("tehila","karavani","tehila","555555",true);
-        Product product1 = new Product("milk",4,30);
-        Product product2 = new Product("bred",10,20);
-        Product product3 = new Product("water",8,15);
-        Product[] products1 = {product1,product2,product3};
+        Customer customer1 = new Customer("Tehila", "Karavani", "tehila", "555555", true);
+        Employee employee1 = new Employee("Tehila", "David", "tehila1", "555555", false, 3);
+        Product product1 = new Product("milk", 4, 30);
+        Product product2 = new Product("bred", 10, 20);
+        Product product3 = new Product("water", 8, 15);
         Customer[] customers1 = {customer1};
+        Employee[] employees1 = {employee1};
+        Product[] products1 = {product1, product2, product3};
         this.customers = customers1;
+        this.employees = employees1;
         this.products = products1;
     }
 
@@ -25,12 +28,12 @@ public class Shop {
 
         String firstName;
         String lastName;
-        String userName;
+        String username;
         String password;
         int userType;
         int clubMemberChoice;
         int rank;
-        boolean userNameIsExist;
+        boolean usernameIsExist;
         boolean isCostumer;
         boolean isClubMember;
 
@@ -47,7 +50,7 @@ public class Shop {
         }
 
         //הסקנר הבא לא עובד בלי זה משום מה, הוא מדלג על הראשון
-        userName = scanner.nextLine();
+        username = scanner.nextLine();
 
 
         do {
@@ -60,45 +63,55 @@ public class Shop {
             lastName = scanner.nextLine();
         } while (hasDigit(lastName));
 
-        //לבדוק אם נמצא חשבון כזה
-        System.out.println("Enter username: ");
-        userName = scanner.nextLine();
+
+        do {
+            System.out.println("Enter username: ");
+            username = scanner.nextLine();
+            if (isCostumer) {
+                usernameIsExist = isCustomerUsernameExist(username);
+            }else {
+                usernameIsExist = isEmployeeUsernameExist(username);
+            }
+            if (usernameIsExist) {
+                System.out.println("Username is already taken.");
+            }
+        }while (usernameIsExist);
+
 
         do {
             System.out.println("Enter password with 6 chars: ");
             password = scanner.nextLine();
-        }while (password.length() < 6);
+        } while (password.length() < 6);
 
         do {
             System.out.println("If you are a club member tap 1 if you do not tap 2");
             clubMemberChoice = scanner.nextInt();
-        }while (clubMemberChoice != 1 && clubMemberChoice != 2);
+        } while (clubMemberChoice != 1 && clubMemberChoice != 2);
 
-        if (clubMemberChoice == 1){
+        if (clubMemberChoice == 1) {
             isClubMember = true;
-        }else {
+        } else {
             isClubMember = false;
         }
 
 
-
-        if (isCostumer){
-            addCustomerToArray(firstName,lastName,userName,password,isClubMember);
-        }else {
+        if (isCostumer) {
+            addCustomerToArray(firstName, lastName, username, password, isClubMember);
+        } else {
             do {
                 System.out.println("What is your rank\n" +
                         "1 - Regular employee.\n" +
                         "2 - Director.\n" +
                         "3 - member of the management team.");
                 rank = scanner.nextInt();
-            }while (rank != 1 && rank != 2 && rank != 3);
-            addEmployeeToArray(firstName,lastName,userName,password,isClubMember,rank);
+            } while (rank != 1 && rank != 2 && rank != 3);
+            addEmployeeToArray(firstName, lastName, username, password, isClubMember, rank);
         }
 
 
     }
 
-    public Employee signInEmployee (String usernameToCheck,String passwordToCheck) {
+    public Employee signInEmployee(String usernameToCheck, String passwordToCheck) {
         for (int i = 0; i < this.employees.length; i++) {
             Employee currentEmployee = this.employees[i];
             if (currentEmployee.getUsername().equals(usernameToCheck) &&
@@ -121,10 +134,10 @@ public class Shop {
         return null;
     }
 
-    public void printProduct () {
+    public void printProductInStock() {
         int counter = 1;
         for (int i = 0; i < this.products.length; i++) {
-            if (this.products[i].isInStock()){
+            if (this.products[i].isInStock()) {
                 System.out.println(counter);
                 System.out.println(this.products[i] + "\n");
                 counter++;
@@ -133,9 +146,27 @@ public class Shop {
         }
     }
 
+    private boolean isEmployeeUsernameExist(String username) {
+        boolean isExist = false;
+        for (int i = 0; i < this.employees.length; i++) {
+            if (this.employees[i].getUsername().equals(username)){
+                isExist = true;
+                break;
+            }
+        }
+        return isExist;
+    }
 
-
-
+    private boolean isCustomerUsernameExist(String username) {
+        boolean isExist = false;
+        for (int i = 0; i < this.customers.length; i++) {
+            if (this.customers[i].getUsername().equals(username)){
+                isExist = true;
+                break;
+            }
+        }
+        return isExist;
+    }
 
     private boolean hasDigit(String stringToCheck) {
         boolean hasDigit = false;
@@ -148,27 +179,25 @@ public class Shop {
         return hasDigit;
     }
 
-    private void addEmployeeToArray(String firstName,String lastName,String username, String password,boolean isClubMember, int rank) {
+    private void addEmployeeToArray(String firstName, String lastName, String username, String password, boolean isClubMember, int rank) {
         Employee[] newEmployeeArray = new Employee[this.employees.length + 1];
         for (int i = 0; i < this.employees.length; i++) {
             newEmployeeArray[i] = this.employees[i];
         }
-        Employee employeeToAdd = new Employee(firstName,lastName,username,password,isClubMember,rank);
+        Employee employeeToAdd = new Employee(firstName, lastName, username, password, isClubMember, rank);
         newEmployeeArray[this.employees.length] = employeeToAdd;
         this.employees = newEmployeeArray;
     }
 
-    private void addCustomerToArray(String firstName,String lastName,String username, String password,boolean isClubMember) {
+    private void addCustomerToArray(String firstName, String lastName, String username, String password, boolean isClubMember) {
         Customer[] newCustomerArray = new Customer[this.customers.length + 1];
         for (int i = 0; i < this.customers.length; i++) {
             newCustomerArray[i] = this.customers[i];
         }
-        Customer customerToAdd = new Customer(firstName,lastName,username,password,isClubMember);
+        Customer customerToAdd = new Customer(firstName, lastName, username, password, isClubMember);
         newCustomerArray[this.customers.length] = customerToAdd;
         this.customers = newCustomerArray;
     }
-
-
 
 
 }
