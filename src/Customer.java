@@ -14,6 +14,14 @@ public class Customer {
         this.isClubMember = isClubMember;
     }
 
+    public String getFirstName () {
+        return firstName;
+    }
+
+    public String getLastName () {
+        return lastName;
+    }
+
     public String getUsername () {
         return this.username;
     }

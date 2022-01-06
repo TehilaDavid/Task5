@@ -1,8 +1,9 @@
 public class Employee extends Customer{
-    private int level;
+    private int rank;
 
-    public Employee(String firstName, String lastName, String username, String password, boolean isClubMember) {
+    public Employee(String firstName, String lastName, String username, String password, boolean isClubMember, int rank) {
         super(firstName, lastName, username, password, isClubMember);
+        this.rank = rank;
     }
 
 
