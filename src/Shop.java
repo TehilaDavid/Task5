@@ -134,7 +134,7 @@ public class Shop {
         return null;
     }
 
-    public Product[] printProductsInStock() {
+    public Product[] productsInStock() {
         int counter = 1;
         Product[] productsInStock = new Product[this.products.length];
         for (int i = 0; i < this.products.length; i++) {
@@ -156,11 +156,28 @@ public class Shop {
         Scanner scanner = new Scanner(System.in);
         int counter = 1;
         int customerChoice;
-        Product[] productsInStock = printProductsInStock();
+        int howMany;
+        int sum = 0;
+        Product[] productsInStock = productsInStock();
         do {
             System.out.println("Enter");
             customerChoice = scanner.nextInt();
-        }while (productsInStock.length < customerChoice);
+        }while (productsInStock.length < customerChoice || customerChoice < 0);
+
+        do {
+            System.out.println("How many?");
+            howMany = scanner.nextInt();
+        }while (howMany < 0);
+
+        Product[] products1 = new Product[howMany];
+        for (int i = 0; i < products1.length; i++) {
+            products1[i] = productsInStock[customerChoice - 1];
+        }
+        sum += products1[0].getPrice() * howMany;
+        System.out.println(sum);
+        //לעשות אפשרות לעוד רכישות
+        //להכניס לעגלת קניות בסוף
+        //לשים את העגלה אצל הלקוח
 
 
     }
