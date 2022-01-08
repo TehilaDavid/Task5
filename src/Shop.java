@@ -135,11 +135,11 @@ public class Shop {
     }
 
     public void printProductInStock() {
+        System.out.println("A List Of Products In Stock----");
         int counter = 1;
         for (int i = 0; i < this.products.length; i++) {
             if (this.products[i].isInStock()) {
-                System.out.println(counter);
-                System.out.println(this.products[i] + "\n");
+                System.out.println(counter+". "+ this.products[i].getDescription() +" ,price:"+ +this.products[i].getPrice() + "\n");
                 counter++;
             }
 
