@@ -28,7 +28,7 @@ public class Main {
                 System.out.println("--Logging in--");
                 do {
                     System.out.println("Are you interested in logging in to an employee's or customer's account" +
-                            "\n" + "for customer enter 1, for employee enter 2");
+                            "\n" + "for customer enter 1" +"\n"+ "for employee enter 2");
                     employeeOrCustomer = scanner.nextInt();
                 }while (employeeOrCustomer != 1 && employeeOrCustomer != 2);
 
@@ -50,7 +50,7 @@ public class Main {
                             System.out.println(" !");
                         }
 
-                        shop.printProductInStock();
+                        //שימי פה את הפונקציה של הרכישה
 
 
 
@@ -91,8 +91,10 @@ public class Main {
 
                         switch (employeeChoice) {
                             case 1:
+                                shop.printAllCustomers();
                                 break;
                             case 2:
+                                shop.printTheClubMemberCustomer();
                                 break;
                             case 3:
                                 break;

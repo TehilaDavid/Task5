@@ -12,6 +12,7 @@ public class Customer {
         this.username = username;
         this.password = password;
         this.isClubMember = isClubMember;
+        this.purchases = new ShoppingCart[0];
     }
 
     public String getFirstName () {
