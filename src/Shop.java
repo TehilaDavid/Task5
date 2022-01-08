@@ -39,7 +39,7 @@ public class Shop {
 
 
         do {
-            System.out.println("-press 1 for costumer" + "\n" + "-press 2 for Employee");
+            System.out.println("-for customer enter 1" + "\n" + "-for employee enter 2");
             userType = scanner.nextInt();
         } while (userType != 1 && userType != 2);
 
@@ -134,17 +134,59 @@ public class Shop {
         return null;
     }
 
-    public void printProductInStock() {
+    public Product[] printProductsInStock() {
         int counter = 1;
+        Product[] productsInStock = new Product[this.products.length];
         for (int i = 0; i < this.products.length; i++) {
             if (this.products[i].isInStock()) {
                 System.out.println(counter);
                 System.out.println(this.products[i] + "\n");
+                productsInStock[counter - 1] = this.products[1];
                 counter++;
             }
+        }
+        Product[] productsInStockWithoutNull = new Product[counter - 1];
+        for (int i = 0; i < counter - 1 ; i++) {
+            productsInStockWithoutNull[i] = productsInStock[i];
+        }
+        return productsInStockWithoutNull;
+    }
 
+    public void purchase () {
+        Scanner scanner = new Scanner(System.in);
+        int counter = 1;
+        int customerChoice;
+        Product[] productsInStock = printProductsInStock();
+        do {
+            System.out.println("Enter");
+            customerChoice = scanner.nextInt();
+        }while (productsInStock.length < customerChoice);
+
+
+    }
+
+
+
+    public void printAllCustomers () {
+        for (int i = 0; i < this.customers.length; i++) {
+            System.out.println(i + 1);
+            System.out.println(this.customers[i]);
         }
     }
+
+    public void printTheClubMemberCustomer () {
+        int counter = 1;
+        for (int i = 0; i < this.customers.length; i++) {
+            if (this.customers[i].isClubMember()){
+                System.out.println(counter);
+                System.out.println(this.customers[i]);
+                counter++;
+            }
+        }
+    }
+
+
+
 
     private boolean isEmployeeUsernameExist(String username) {
         boolean isExist = false;
