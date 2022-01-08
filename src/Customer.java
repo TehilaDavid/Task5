@@ -12,7 +12,6 @@ public class Customer {
         this.username = username;
         this.password = password;
         this.isClubMember = isClubMember;
-        this.purchases = new ShoppingCart[0];
     }
 
     public String getFirstName () {
@@ -41,9 +40,9 @@ public class Customer {
     public String toString (){
         String output = this.firstName + " " + this.lastName;
         if (this.isClubMember) {
-            output += " (VIP) ";
+            output += " (VIP)";
         }
-        output += "\n" + "The amount of purchases: " + this.purchases.length + "\n";
+        output += "The amount of purchases: " + this.purchases.length;
         return output;
     }
 //    -סך עלות כל הרכישות שביצע
