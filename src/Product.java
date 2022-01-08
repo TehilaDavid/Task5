@@ -12,6 +12,14 @@ public class Product {
         isInStock = true;
     }
 
+    public String getDescription(){
+        return this.description;
+    }
+
+    public int getPrice(){
+        return this.price;
+    }
+
     public boolean isInStock() {
         return this.isInStock;
     }
