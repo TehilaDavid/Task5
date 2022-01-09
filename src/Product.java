@@ -12,8 +12,12 @@ public class Product {
         isInStock = true;
     }
 
-    public int getPrice() {
-        return price;
+    public String getDescription(){
+        return this.description;
+    }
+
+    public int getPrice(){
+        return this.price;
     }
 
     public boolean isInStock() {
@@ -25,8 +29,7 @@ public class Product {
     }
 
     public String toString (){
-        String output = "* " + this.description + " *" + "\n" + "the price is " + this.price + ", there is " + this.discountPercentages + "% discount for club members.";
+        String output = this.description + "- " + "\n" + "price:" + this.price + ", there is " + this.discountPercentages + "% discount for club members.";
         return output;
     }
 }
-

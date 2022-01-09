@@ -50,12 +50,18 @@ public class Main {
                             System.out.println(" !");
                         }
 
-                        //שימי פה את הפונקציה של הרכישה
+                        ShoppingCart s1 = new ShoppingCart();
 
 
-
-
-
+                        int customerChoice2;
+                        do {
+                            shop.printProductInStock();
+                            customerChoice2 = shop.purchase(loggedCustomer);
+                            if (customerChoice2 == -1){
+                                loggedCustomer.addToSumPurchases(loggedCustomer.getShoppingCart().totalPrice);
+                                loggedCustomer.purchaseReset();
+                            }
+                        }while (customerChoice2 != -1);
 
 
                     }

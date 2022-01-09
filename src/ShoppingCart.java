@@ -7,15 +7,15 @@ public class ShoppingCart {
         this.products = new Product[0];
     }
 
-    public void setProducts (Product productToAdd){
+    public void setProducts (Product productToAdd) {
         Product[] newProducts = new Product[this.products.length + 1];
         for (int i = 0; i < this.products.length; i++) {
             newProducts[i] = this.products[i];
         }
         newProducts[this.products.length] = productToAdd;
         this.products = newProducts;
-
     }
+
     public int getTotalPrice(){
         calculatePrice();
         return this.totalPrice;
@@ -25,13 +25,28 @@ public class ShoppingCart {
         int price = 0;
         for (int i = 0; i < this.products.length; i++) {
             price += this.products[i].getPrice();
-
         }
         this.totalPrice = price;
     }
 
-
     public Product[] getProducts() {
         return this.products;
     }
+
+    public String toString () {
+        int listCounter = 0;
+        String output = "";
+        calculatePrice();
+
+        for (int i = 0; i < this.products.length; i++) {
+            listCounter++;
+            output += (listCounter + "." + this.products[i].getDescription() + "\n");
+        }
+        output += "-------------------------" + "\n" + "total:" + this.totalPrice + "\n";
+
+        return output;
+    }
+
+
+
 }

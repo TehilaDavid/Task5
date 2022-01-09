@@ -69,13 +69,13 @@ public class Shop {
             username = scanner.nextLine();
             if (isCostumer) {
                 usernameIsExist = isCustomerUsernameExist(username);
-            }else {
+            } else {
                 usernameIsExist = isEmployeeUsernameExist(username);
             }
             if (usernameIsExist) {
                 System.out.println("Username is already taken.");
             }
-        }while (usernameIsExist);
+        } while (usernameIsExist);
 
 
         do {
@@ -134,17 +134,69 @@ public class Shop {
         return null;
     }
 
-    public void printAllCustomers () {
+    public Product[] printProductInStock() {
+        Product[] productsInStock = new Product[this.products.length];
+        System.out.println("A List Of Products In Stock ------");
+        int counter = 1;
+        for (int i = 0; i < this.products.length; i++) {
+            if (this.products[i].isInStock()) {
+                System.out.print(counter + ". ");
+                System.out.println(this.products[i]);
+                productsInStock[counter - 1] = this.products[i];
+                counter++;
+            }
+        }
+        Product[] productsInStockWithoutNull = new Product[counter - 1];
+        for (int i = 0; i < productsInStockWithoutNull.length; i++) {
+            productsInStockWithoutNull[i] = productsInStock[i];
+        }
+        System.out.println("-------------------");
+        return productsInStockWithoutNull;
+    }
+
+    public int purchase(Customer customer) {
+        Scanner scanner = new Scanner(System.in);
+
+        int productNumber;
+        int productAmount;
+        do {
+            System.out.println("please enter the product's number:");
+            System.out.println("Else - enter (-1) for end ");
+            productNumber = scanner.nextInt();
+        } while (productNumber > this.products.length || productNumber < -1);
+
+        if (productNumber != -1) {
+            if (customer.getShoppingCart().getTotalPrice() == 0) {
+                customer.addNumberOfPurchase();
+            }
+            do {
+                System.out.println("please enter the amount: ");
+                productAmount = scanner.nextInt();
+            } while (productAmount <= 0);
+
+            for (int i = 0; i < productAmount; i++) {
+                customer.setShoppingCart(this.products[productNumber - 1]);
+            }
+            System.out.println(customer.getShoppingCart());
+        }else {
+            System.out.println(customer.getShoppingCart());
+        }
+
+
+        return productNumber;
+    }
+
+    public void printAllCustomers() {
         for (int i = 0; i < this.customers.length; i++) {
             System.out.println(i + 1);
             System.out.println(this.customers[i]);
         }
     }
 
-    public void printTheClubMemberCustomer () {
+    public void printTheClubMemberCustomer() {
         int counter = 1;
         for (int i = 0; i < this.customers.length; i++) {
-            if (this.customers[i].isClubMember()){
+            if (this.customers[i].isClubMember()) {
                 System.out.println(counter);
                 System.out.println(this.customers[i]);
                 counter++;
@@ -153,12 +205,10 @@ public class Shop {
     }
 
 
-
-
     private boolean isEmployeeUsernameExist(String username) {
         boolean isExist = false;
         for (int i = 0; i < this.employees.length; i++) {
-            if (this.employees[i].getUsername().equals(username)){
+            if (this.employees[i].getUsername().equals(username)) {
                 isExist = true;
                 break;
             }
@@ -169,7 +219,7 @@ public class Shop {
     private boolean isCustomerUsernameExist(String username) {
         boolean isExist = false;
         for (int i = 0; i < this.customers.length; i++) {
-            if (this.customers[i].getUsername().equals(username)){
+            if (this.customers[i].getUsername().equals(username)) {
                 isExist = true;
                 break;
             }
