@@ -28,6 +28,10 @@ public class Product {
         this.isInStock = isInStock;
     }
 
+    public int getDiscountPercentages() {
+        return this.discountPercentages;
+    }
+
     public String toString (){
         String output = this.description + "- " + "\n" + "price:" + this.price + ", there is " + this.discountPercentages + "% discount for club members.";
         return output;

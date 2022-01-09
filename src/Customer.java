@@ -6,7 +6,7 @@ public class Customer {
     private boolean isClubMember;
     private ShoppingCart shoppingCart;
     private int numberOfPurchase;
-    private int sumPurchases;
+    private double sumPurchases;
 
 
     public Customer (String firstName, String lastName,String username,String password,boolean isClubMember) {
@@ -52,7 +52,7 @@ public class Customer {
         this.numberOfPurchase += 1;
     }
 
-    public void addToSumPurchases(int purchasePrice) {
+    public void addToSumPurchases(double purchasePrice) {
         this.sumPurchases += purchasePrice;
     }
 
@@ -64,8 +64,20 @@ public class Customer {
         return this.numberOfPurchase;
     }
 
-    public int getSumPurchases() {
+    public double getSumPurchases() {
         return this.sumPurchases;
+    }
+
+    public void calculatePrice (){
+        double price = 0;
+        for (int i = 0; i < this.shoppingCart.getProducts().length; i++) {
+            price += this.shoppingCart.getProducts()[i].getPrice();
+        }
+        if (this.isClubMember()) {
+            double discount = this.shoppingCart.getProducts()[this.shoppingCart.getProducts().length - 1].getDiscountPercentages();
+            price = price * ((100 - discount)/100);
+        }
+        this.shoppingCart.setTotalPrice(price);
     }
 
     public String toString (){

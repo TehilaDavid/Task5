@@ -1,6 +1,6 @@
 public class ShoppingCart {
     private Product[] products;
-    int totalPrice;
+    double totalPrice;
     //תאריך הרכישה
 
     public ShoppingCart (){
@@ -16,17 +16,12 @@ public class ShoppingCart {
         this.products = newProducts;
     }
 
-    public int getTotalPrice(){
-        calculatePrice();
+    public double getTotalPrice(Customer customer){
         return this.totalPrice;
     }
 
-    private void calculatePrice (){
-        int price = 0;
-        for (int i = 0; i < this.products.length; i++) {
-            price += this.products[i].getPrice();
-        }
-        this.totalPrice = price;
+    public void setTotalPrice(double totalPrice) {
+        this.totalPrice = totalPrice;
     }
 
     public Product[] getProducts() {
@@ -36,7 +31,6 @@ public class ShoppingCart {
     public String toString () {
         int listCounter = 0;
         String output = "";
-        calculatePrice();
 
         for (int i = 0; i < this.products.length; i++) {
             listCounter++;

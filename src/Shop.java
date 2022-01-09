@@ -134,39 +134,21 @@ public class Shop {
         return null;
     }
 
-    public Product[] printProductInStock() {
-        Product[] productsInStock = new Product[this.products.length];
-        System.out.println("A List Of Products In Stock ------");
-        int counter = 1;
-        for (int i = 0; i < this.products.length; i++) {
-            if (this.products[i].isInStock()) {
-                System.out.print(counter + ". ");
-                System.out.println(this.products[i]);
-                productsInStock[counter - 1] = this.products[i];
-                counter++;
-            }
-        }
-        Product[] productsInStockWithoutNull = new Product[counter - 1];
-        for (int i = 0; i < productsInStockWithoutNull.length; i++) {
-            productsInStockWithoutNull[i] = productsInStock[i];
-        }
-        System.out.println("-------------------");
-        return productsInStockWithoutNull;
-    }
+
 
     public int purchase(Customer customer) {
         Scanner scanner = new Scanner(System.in);
-
         int productNumber;
         int productAmount;
+        Product[] productsInStock = printAndGetProductInStock();
         do {
             System.out.println("please enter the product's number:");
             System.out.println("Else - enter (-1) for end ");
             productNumber = scanner.nextInt();
-        } while (productNumber > this.products.length || productNumber < -1);
+        } while (productNumber > productsInStock.length || productNumber < -1);
 
         if (productNumber != -1) {
-            if (customer.getShoppingCart().getTotalPrice() == 0) {
+            if (customer.getShoppingCart().getTotalPrice(customer) == 0) {
                 customer.addNumberOfPurchase();
             }
             do {
@@ -175,8 +157,10 @@ public class Shop {
             } while (productAmount <= 0);
 
             for (int i = 0; i < productAmount; i++) {
-                customer.setShoppingCart(this.products[productNumber - 1]);
+                customer.setShoppingCart(productsInStock[productNumber - 1]);
             }
+            customer.calculatePrice();
+            customer.getShoppingCart().getTotalPrice(customer);
             System.out.println(customer.getShoppingCart());
         }else {
             System.out.println(customer.getShoppingCart());
@@ -204,6 +188,28 @@ public class Shop {
         }
     }
 
+
+
+
+    private Product[] printAndGetProductInStock() {
+        Product[] productsInStock = new Product[this.products.length];
+        System.out.println("A List Of Products In Stock ------");
+        int counter = 1;
+        for (int i = 0; i < this.products.length; i++) {
+            if (this.products[i].isInStock()) {
+                System.out.print("\n" + counter + ". ");
+                System.out.println(this.products[i]);
+                productsInStock[counter - 1] = this.products[i];
+                counter++;
+            }
+        }
+        Product[] productsInStockWithoutNull = new Product[counter - 1];
+        for (int i = 0; i < productsInStockWithoutNull.length; i++) {
+            productsInStockWithoutNull[i] = productsInStock[i];
+        }
+        System.out.println("-------------------");
+        return productsInStockWithoutNull;
+    }
 
     private boolean isEmployeeUsernameExist(String username) {
         boolean isExist = false;

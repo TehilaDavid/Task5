@@ -50,12 +50,11 @@ public class Main {
                             System.out.println(" !");
                         }
 
-                        ShoppingCart s1 = new ShoppingCart();
 
 
                         int customerChoice2;
                         do {
-                            shop.printProductInStock();
+
                             customerChoice2 = shop.purchase(loggedCustomer);
                             if (customerChoice2 == -1){
                                 loggedCustomer.addToSumPurchases(loggedCustomer.getShoppingCart().totalPrice);
