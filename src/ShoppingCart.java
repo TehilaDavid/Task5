@@ -16,7 +16,7 @@ public class ShoppingCart {
         this.products = newProducts;
     }
 
-    public double getTotalPrice(Customer customer){
+    public double getTotalPrice(){
         return this.totalPrice;
     }
 

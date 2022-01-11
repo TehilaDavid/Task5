@@ -1,3 +1,6 @@
+import javax.xml.crypto.Data;
+import java.util.Date;
+
 public class Customer {
     private String firstName;
     private String lastName;
@@ -7,6 +10,7 @@ public class Customer {
     private ShoppingCart shoppingCart;
     private int numberOfPurchase;
     private double sumPurchases;
+    private Date dateOfLastPurchase;
 
 
     public Customer (String firstName, String lastName,String username,String password,boolean isClubMember) {
@@ -68,16 +72,25 @@ public class Customer {
         return this.sumPurchases;
     }
 
+    public void setDateOfLastPurchase(Date dateOfLastPurchase) {
+        this.dateOfLastPurchase = dateOfLastPurchase;
+    }
+
     public void calculatePrice (){
         double price = 0;
+        double sum = 0;
+        boolean isClubMember = this.isClubMember;
         for (int i = 0; i < this.shoppingCart.getProducts().length; i++) {
-            price += this.shoppingCart.getProducts()[i].getPrice();
+            Product currentProduct = this.shoppingCart.getProducts()[i];
+            price = 0;
+            price += currentProduct.getPrice();
+
+            if (isClubMember) {
+                double discount = currentProduct.getDiscountPercentages();
+                sum += (price * ((100 - discount)/100));
+            }
         }
-        if (this.isClubMember()) {
-            double discount = this.shoppingCart.getProducts()[this.shoppingCart.getProducts().length - 1].getDiscountPercentages();
-            price = price * ((100 - discount)/100);
-        }
-        this.shoppingCart.setTotalPrice(price);
+        this.shoppingCart.setTotalPrice(sum);
     }
 
     public String toString (){
@@ -85,10 +98,10 @@ public class Customer {
         if (this.isClubMember) {
             output += " (VIP)";
         }
-        output += "The amount of purchases: ";
+        output += "\nThe amount of purchases: " + this.getNumberOfPurchase() + "\nThe sum of all the purchases he made: " + this.sumPurchases +
+        "\nLast purchase date made: " + this.dateOfLastPurchase;
         return output;
     }
-//    -סך עלות כל הרכישות שביצע
-//    -תאריך הרכישה האחרונה שביצע
+
 
 }

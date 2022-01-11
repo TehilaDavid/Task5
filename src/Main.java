@@ -1,3 +1,5 @@
+import javax.xml.crypto.Data;
+import java.util.Date;
 import java.util.Scanner;
 
 public class Main {
@@ -9,7 +11,6 @@ public class Main {
         int employeeOrCustomer;
         int userChoice;
         int employeeChoice;
-        int customerChoice;
 
         do {
             do {
@@ -56,9 +57,11 @@ public class Main {
                         do {
 
                             customerChoice2 = shop.purchase(loggedCustomer);
-                            if (customerChoice2 == -1){
+                            if (customerChoice2 == -1 && loggedCustomer.getShoppingCart().totalPrice != 0){
                                 loggedCustomer.addToSumPurchases(loggedCustomer.getShoppingCart().totalPrice);
                                 loggedCustomer.purchaseReset();
+                                Date dateOfAcquisition = new Date();
+                                loggedCustomer.setDateOfLastPurchase(dateOfAcquisition);
                             }
                         }while (customerChoice2 != -1);
 
@@ -102,12 +105,14 @@ public class Main {
                                 shop.printTheClubMemberCustomer();
                                 break;
                             case 3:
+                                shop.printCustomersWithAtLeastOnePurchase();
                                 break;
                             case 4:
                                 break;
                             case 5:
                                 break;
                             case 6:
+                                shop.changeIsInStock();
                                 break;
                             case 7:
                                 break;

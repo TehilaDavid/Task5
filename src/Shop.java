@@ -9,6 +9,7 @@ public class Shop {
 //        this.employees = new Employee[0];
 //        this.customers = new Customer[0];
 //        this.products = new Product[0];
+
         Customer customer1 = new Customer("Tehila", "Karavani", "tehila", "555555", true);
         Employee employee1 = new Employee("Tehila", "David", "tehila1", "555555", false, 3);
         Product product1 = new Product("milk", 4, 30);
@@ -134,8 +135,6 @@ public class Shop {
         return null;
     }
 
-
-
     public int purchase(Customer customer) {
         Scanner scanner = new Scanner(System.in);
         int productNumber;
@@ -148,7 +147,7 @@ public class Shop {
         } while (productNumber > productsInStock.length || productNumber < -1);
 
         if (productNumber != -1) {
-            if (customer.getShoppingCart().getTotalPrice(customer) == 0) {
+            if (customer.getShoppingCart().getTotalPrice() == 0) {
                 customer.addNumberOfPurchase();
             }
             do {
@@ -160,7 +159,7 @@ public class Shop {
                 customer.setShoppingCart(productsInStock[productNumber - 1]);
             }
             customer.calculatePrice();
-            customer.getShoppingCart().getTotalPrice(customer);
+            customer.getShoppingCart().getTotalPrice();
             System.out.println(customer.getShoppingCart());
         }else {
             System.out.println(customer.getShoppingCart());
@@ -188,6 +187,40 @@ public class Shop {
         }
     }
 
+    public void printCustomersWithAtLeastOnePurchase () {
+        for (int i = 0; i < this.customers.length; i++) {
+            Customer currentCustomer = this.customers[i];
+            if (currentCustomer.getNumberOfPurchase() >= 1) {
+                System.out.println(currentCustomer);
+            }
+        }
+    }
+
+    public void changeIsInStock () {
+        Scanner scanner = new Scanner(System.in);
+        int indexOfTheProductToChange;
+        int ifInStock;
+        boolean isInStock = false;
+        for (int i = 0; i < this.products.length; i++) {
+            System.out.println((i + 1) + ". " + this.products[i]);
+        }
+        do {
+            System.out.println("\nEnter the number of the product you want to change its status to: ");
+            indexOfTheProductToChange = scanner.nextInt();
+        }while (indexOfTheProductToChange > this.products.length || indexOfTheProductToChange < 1);
+
+
+        do {
+            System.out.println("If the product is in stock enter 1, else enter 2");
+            ifInStock = scanner.nextInt();
+        }while (ifInStock != 1 && ifInStock != 2);
+
+        if (ifInStock == 1) {
+            isInStock = true;
+        }
+        this.products[indexOfTheProductToChange - 1].isInStock(isInStock);
+    }
+
 
 
 
@@ -197,7 +230,7 @@ public class Shop {
         int counter = 1;
         for (int i = 0; i < this.products.length; i++) {
             if (this.products[i].isInStock()) {
-                System.out.print("\n" + counter + ". ");
+                System.out.print(counter + ". ");
                 System.out.println(this.products[i]);
                 productsInStock[counter - 1] = this.products[i];
                 counter++;
