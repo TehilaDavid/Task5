@@ -335,6 +335,7 @@ public class Shop {
         newCustomerArray[this.customers.length] = customerToAdd;
         this.customers = newCustomerArray;
     }
+
     public Customer[] getCustomers (){
         return this.customers;
     }

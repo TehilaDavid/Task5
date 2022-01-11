@@ -19,20 +19,20 @@ public class Main {
                         "2 - Login to an existing account\n" +
                         "3 - Exit");
                 userChoice = scanner.nextInt();
-            }while (userChoice != 1 && userChoice != 2 && userChoice != 3);
+            } while (userChoice != 1 && userChoice != 2 && userChoice != 3);
 
 
-            if (userChoice == 1){
+            if (userChoice == 1) {
                 shop.crateAccount();
             }
 
-            if (userChoice == 2){
+            if (userChoice == 2) {
                 System.out.println("--Logging in--");
                 do {
                     System.out.println("Are you interested in logging in to an employee's or customer's account" +
-                            "\n" + "for customer enter 1" +"\n"+ "for employee enter 2");
+                            "\n" + "for customer enter 1" + "\n" + "for employee enter 2");
                     employeeOrCustomer = scanner.nextInt();
-                }while (employeeOrCustomer != 1 && employeeOrCustomer != 2);
+                } while (employeeOrCustomer != 1 && employeeOrCustomer != 2);
 
                 userNameToCheck = scanner.nextLine();
 
@@ -41,38 +41,36 @@ public class Main {
                 System.out.println("Enter your password: ");
                 passwordToCheck = scanner.nextLine();
                 if (employeeOrCustomer == 1) {
-                    Customer loggedCustomer = shop.signInCustomer(userNameToCheck,passwordToCheck);
+                    Customer loggedCustomer = shop.signInCustomer(userNameToCheck, passwordToCheck);
                     if (loggedCustomer == null) {
                         System.out.println("Login failed, The username or password is incorrect");
-                    }else {
+                    } else {
                         System.out.print("Hello " + loggedCustomer.getFirstName() + " " + loggedCustomer.getLastName());
-                        if (loggedCustomer.isClubMember()){
+                        if (loggedCustomer.isClubMember()) {
                             System.out.println(" (VIP)!");
-                        }else {
+                        } else {
                             System.out.println(" !");
                         }
 
 
-
                         int customerChoice2;
                         do {
-
                             customerChoice2 = shop.purchase(loggedCustomer);
-                            if (customerChoice2 == -1 && loggedCustomer.getShoppingCart().totalPrice != 0){
+                            if (customerChoice2 == -1 && loggedCustomer.getShoppingCart().totalPrice != 0) {
                                 loggedCustomer.addToSumPurchases(loggedCustomer.getShoppingCart().totalPrice);
                                 loggedCustomer.purchaseReset();
                                 Date dateOfAcquisition = new Date();
                                 loggedCustomer.setDateOfLastPurchase(dateOfAcquisition);
                             }
-                        }while (customerChoice2 != -1);
+                        } while (customerChoice2 != -1);
 
 
                     }
-                }else {
-                    Employee loggedEmployee = shop.signInEmployee(userNameToCheck,passwordToCheck);
+                } else {
+                    Employee loggedEmployee = shop.signInEmployee(userNameToCheck, passwordToCheck);
                     if (loggedEmployee == null) {
                         System.out.println("Login failed, The username or password is incorrect");
-                    }else {
+                    } else {
                         System.out.print("Hello " + loggedEmployee.getFirstName() + " " + loggedEmployee.getLastName() + " (");
                         if (loggedEmployee.getRank() == 1) {
                             System.out.println("Regular employee)!");
@@ -96,7 +94,7 @@ public class Main {
                                     "\n" + "7- Making a purchase" +
                                     "\n" + "8- Disconnect and return to the main menu");
                             employeeChoice = scanner.nextInt();
-                        }while (employeeChoice > 8 || employeeChoice < 1);
+                        } while (employeeChoice > 8 || employeeChoice < 1);
 
                         switch (employeeChoice) {
                             case 1:
@@ -111,10 +109,9 @@ public class Main {
                             case 4:
                                 Customer[] customers = shop.getCustomers();
                                 //ניסתי לעשות שאם אין לקוחות (המערך ריק כאילו) אז שלא יבדוק. ולא הצלחתי להשוות את זה לnull
-                                if (customers.length == 0){
+                                if (customers.length == 0) {
                                     System.out.println("there is no costumers");
-
-                                }else {
+                                } else {
                                     shop.printCustomerWithTheTopDollar();
                                 }
                                 break;
@@ -125,7 +122,13 @@ public class Main {
                                 shop.changeIsInStock();
                                 break;
                             case 7:
-                                shop.purchase(loggedEmployee);
+                                int customerChoice2;
+                                do {
+                                    customerChoice2 = shop.purchase(loggedEmployee);
+                                    if (customerChoice2 == -1 && loggedEmployee.getShoppingCart().totalPrice != 0) {
+                                        loggedEmployee.purchaseReset();
+                                    }
+                                } while (customerChoice2 != -1);
                                 break;
                             case 8:
                                 break;
@@ -135,7 +138,7 @@ public class Main {
 
                 }
             }
-        }while (userChoice != 3);
+        } while (userChoice != 3);
 
 //        1 – הדפסת רשימת כל הלקוחות.
 //        2 – הדפסת רשימת הלקוחות החברים במועדון בלבד.
@@ -145,18 +148,6 @@ public class Main {
 //        6 – שינוי סטטוס מלאי עבור מוצר: עדכון עבור מוצר ספציפי האם הוא נמצא במלאי או לא. ללקוח תודפס רשימה ממוספרת של המוצרים, וכשהוא יבחר במספר המוצר יכניס האם קיים במלאי או לא.
 //        7 – ביצוע רכישה: גם עובדי החנות הם סוג של לקוחות החנות, כיוון שהם יכולים להיות לרכוש מוצרים מהחנות. תהליך הרכישה של עובד בחנות זהה לתהליך הרכישה של לקוח רגיל, למעט הפרט הבא: עובד של החנות זכאי להנחה על כל החשבונית שלו, בהתאם לדרגתו. אם דרגתו הוא עובד רגיל – 10 אחוזים הנחה; מנהל – 20 אחוזים; וחבר בצוות ההנהלה – 30 אחוזים.
 //        8 – התנתקות: מדפיסה את התפריט הראשי שוב.
-
-
-
-
-
-
-
-
-
-
-
-
 
 
     }

@@ -87,6 +87,8 @@ public class Customer {
             if (isClubMember) {
                 double discount = currentProduct.getDiscountPercentages();
                 sum += (price * ((100 - discount)/100));
+            }else {
+                sum += price;
             }
         }
         this.shoppingCart.setTotalPrice(sum);
