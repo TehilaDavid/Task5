@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Scanner;
 
@@ -110,13 +109,23 @@ public class Main {
                                 shop.printCustomersWithAtLeastOnePurchase();
                                 break;
                             case 4:
+                                Customer[] customers = shop.getCustomers();
+                                //ניסתי לעשות שאם אין לקוחות (המערך ריק כאילו) אז שלא יבדוק. ולא הצלחתי להשוות את זה לnull
+                                if (customers.length == 0){
+                                    System.out.println("there is no costumers");
+
+                                }else {
+                                    shop.printCustomerWithTheTopDollar();
+                                }
                                 break;
                             case 5:
+                                shop.addNewProduct();
                                 break;
                             case 6:
                                 shop.changeIsInStock();
                                 break;
                             case 7:
+                                shop.purchase(loggedEmployee);
                                 break;
                             case 8:
                                 break;

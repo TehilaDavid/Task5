@@ -1,4 +1,3 @@
-import javax.xml.crypto.Data;
 import java.util.Date;
 
 public class Customer {
@@ -99,7 +98,7 @@ public class Customer {
             output += " (VIP)";
         }
         output += "\nThe amount of purchases: " + this.getNumberOfPurchase() + "\nThe sum of all the purchases he made: " + this.sumPurchases +
-        "\nLast purchase date made: " + this.dateOfLastPurchase;
+                "\nLast purchase date made: " + this.dateOfLastPurchase;
         return output;
     }
 

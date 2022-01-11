@@ -160,13 +160,22 @@ public class Shop {
             }
             customer.calculatePrice();
             customer.getShoppingCart().getTotalPrice();
-            System.out.println(customer.getShoppingCart());
-        }else {
-            System.out.println(customer.getShoppingCart());
         }
+        System.out.println(customer.getShoppingCart());
 
 
         return productNumber;
+    }
+
+    public void printCustomerWithTheTopDollar (){
+        Customer topDollarCustomer = this.customers[0];
+
+        for (int i = 0; i < this.customers.length ; i++) {
+            if (this.customers[i].getSumPurchases() > topDollarCustomer.getSumPurchases()) {
+                topDollarCustomer = this.customers[i];
+            }
+        }
+        System.out.println("the customer with the top dollar purchase is: " + topDollarCustomer.getFirstName() + " " + topDollarCustomer.getLastName());
     }
 
     public void printAllCustomers() {
@@ -219,6 +228,36 @@ public class Shop {
             isInStock = true;
         }
         this.products[indexOfTheProductToChange - 1].isInStock(isInStock);
+    }
+
+    public void addNewProduct (){
+        Scanner scanner = new Scanner(System.in);
+        String description;
+        int price;
+        double discountPercentages;
+
+        System.out.println("Please enter the product's description: ");
+        description = scanner.nextLine();
+
+        System.out.println("Please enter the product's price: ");
+        price = scanner.nextInt();
+
+        System.out.println("Enter the discount Percentages for club members:  ");
+        discountPercentages = scanner.nextDouble();
+
+        Product newProduct = new Product(description,price,discountPercentages);
+        addProductToArray(newProduct);
+        System.out.println("-Product Successfully Added!-");
+    }
+
+    private void addProductToArray (Product productToAdd) {
+        Product[] newProductArray = new Product[products.length + 1];
+        for (int i = 0; i < this.products.length; i++) {
+            newProductArray[i] = this.products[i];
+        }
+        newProductArray[this.products.length] = productToAdd;
+        this.products = newProductArray;
+
     }
 
 
@@ -295,6 +334,9 @@ public class Shop {
         Customer customerToAdd = new Customer(firstName, lastName, username, password, isClubMember);
         newCustomerArray[this.customers.length] = customerToAdd;
         this.customers = newCustomerArray;
+    }
+    public Customer[] getCustomers (){
+        return this.customers;
     }
 
 

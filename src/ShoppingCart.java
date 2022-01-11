@@ -1,7 +1,6 @@
 public class ShoppingCart {
     private Product[] products;
     double totalPrice;
-    //תאריך הרכישה
 
     public ShoppingCart (){
         this.products = new Product[0];
