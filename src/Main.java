@@ -2,6 +2,8 @@ import javax.xml.crypto.Data;
 import java.util.Date;
 import java.util.Scanner;
 
+//זה מעודכןןןןן
+
 public class Main {
     public static void main(String[] args) {
         Scanner scanner = new Scanner(System.in);
