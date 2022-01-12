@@ -76,22 +76,21 @@ public class Customer {
     }
 
     public void calculatePrice (){
-        double price = 0;
-        double sum = 0;
+        double priceProduct;
+        double sumProducts = 0;
         boolean isClubMember = this.isClubMember;
         for (int i = 0; i < this.shoppingCart.getProducts().length; i++) {
             Product currentProduct = this.shoppingCart.getProducts()[i];
-            price = 0;
-            price += currentProduct.getPrice();
+            priceProduct = currentProduct.getPrice();
 
             if (isClubMember) {
                 double discount = currentProduct.getDiscountPercentages();
-                sum += (price * ((100 - discount)/100));
+                sumProducts += (priceProduct * ((100 - discount)/100));
             }else {
-                sum += price;
+                sumProducts += priceProduct;
             }
         }
-        this.shoppingCart.setTotalPrice(sum);
+        this.shoppingCart.setTotalPrice(sumProducts);
     }
 
     public String toString (){

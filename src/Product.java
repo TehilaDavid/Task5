@@ -9,7 +9,7 @@ public class Product {
         this.description = description;
         this.price = price;
         this.discountPercentages = discountPercentages;
-        isInStock = true;
+        this.isInStock = true;
     }
 
     public String getDescription(){

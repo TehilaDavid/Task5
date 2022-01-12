@@ -1,6 +1,22 @@
 import java.util.Scanner;
 
 public class Shop {
+    private static final int SIGN_IN_CUSTOMER = 1;
+    private static final int SIGN_IN_EMPLOYEE = 2;
+    private static final int MIN_PASSWORD_LENGTH = 6;
+    private static final int IS_CLUB_MEMBER = 1;
+    private static final int IS_NOT_CLUB_MEMBER = 2;
+    private static final int MIN_RANK = 1;
+    private static final int MAX_RANK = 3;
+    private static final int COMPLETION_OF_PURCHASE = -1;
+    private static final int PRODUCT_IN_STOCK = 1;
+    private static final int PRODUCT_NOT_IN_STOCK = 2;
+    private static final int MIN_PRICE = 0;
+    private static final int MIN_PRODUCT_AMOUNT = 0;
+    private static final int MIN_PROPER_DISCOUNT = 0;
+    private static final int MAX_PROPER_DISCOUNT = 100;
+
+
     private Employee[] employees;
     private Customer[] customers;
     private Product[] products;
@@ -42,7 +58,7 @@ public class Shop {
         do {
             System.out.println("-for customer enter 1" + "\n" + "-for employee enter 2");
             userType = scanner.nextInt();
-        } while (userType != 1 && userType != 2);
+        } while (userType != SIGN_IN_CUSTOMER && userType != SIGN_IN_EMPLOYEE);
 
         if (userType == 1) {
             isCostumer = true;
@@ -75,18 +91,17 @@ public class Shop {
             }
         } while (usernameIsExist);
 
-
         do {
             System.out.println("Enter password with 6 chars: ");
             password = scanner1.nextLine();
-        } while (password.length() < 6);
+        } while (password.length() < MIN_PASSWORD_LENGTH);
 
         do {
             System.out.println("If you are a club member tap 1 if you do not tap 2");
             clubMemberChoice = scanner1.nextInt();
-        } while (clubMemberChoice != 1 && clubMemberChoice != 2);
+        } while (clubMemberChoice != IS_CLUB_MEMBER && clubMemberChoice != IS_NOT_CLUB_MEMBER);
 
-        if (clubMemberChoice == 1) {
+        if (clubMemberChoice == IS_CLUB_MEMBER) {
             isClubMember = true;
         } else {
             isClubMember = false;
@@ -102,11 +117,9 @@ public class Shop {
                         "2 - Director.\n" +
                         "3 - member of the management team.");
                 rank = scanner.nextInt();
-            } while (rank != 1 && rank != 2 && rank != 3);
+            } while (rank > MAX_RANK || rank < MIN_RANK);
             addEmployeeToArray(firstName, lastName, username, password, isClubMember, rank);
         }
-
-
     }
 
     public Employee signInEmployee(String usernameToCheck, String passwordToCheck) {
@@ -141,16 +154,16 @@ public class Shop {
             System.out.println("please enter the product's number:");
             System.out.println("Else - enter (-1) for end ");
             productNumber = scanner.nextInt();
-        } while (productNumber > productsInStock.length || productNumber < -1);
+        } while (productNumber > productsInStock.length || productNumber < COMPLETION_OF_PURCHASE || productNumber == 0);
 
-        if (productNumber != -1) {
+        if (productNumber != COMPLETION_OF_PURCHASE) {
             if (customer.getShoppingCart().getTotalPrice() == 0) {
                 customer.addNumberOfPurchase();
             }
             do {
                 System.out.println("please enter the amount: ");
                 productAmount = scanner.nextInt();
-            } while (productAmount <= 0);
+            } while (productAmount <= MIN_PRODUCT_AMOUNT);
 
             for (int i = 0; i < productAmount; i++) {
                 customer.setShoppingCart(productsInStock[productNumber - 1]);
@@ -158,8 +171,6 @@ public class Shop {
             customer.calculatePrice();
         }
         System.out.println(customer.getShoppingCart());
-
-
         return productNumber;
     }
 
@@ -226,9 +237,9 @@ public class Shop {
         do {
             System.out.println("If the product is in stock enter 1, else enter 2");
             ifInStock = scanner.nextInt();
-        }while (ifInStock != 1 && ifInStock != 2);
+        }while (ifInStock != PRODUCT_IN_STOCK && ifInStock != PRODUCT_NOT_IN_STOCK);
 
-        if (ifInStock == 1) {
+        if (ifInStock == PRODUCT_IN_STOCK) {
             isInStock = true;
         }
         this.products[indexOfTheProductToChange - 1].isInStock(isInStock);
@@ -246,18 +257,17 @@ public class Shop {
         do {
             System.out.println("Please enter the product's price: ");
             price = scanner.nextInt();
-        }while (price <= 0);
+        }while (price <= MIN_PRICE);
 
         do {
             System.out.println("Enter the discount Percentages for club members:  ");
             discountPercentages = scanner.nextDouble();
-        }while (discountPercentages < 0);
+        }while (discountPercentages < MIN_PROPER_DISCOUNT || discountPercentages > MAX_PROPER_DISCOUNT);
 
         Product newProduct = new Product(description,price,discountPercentages);
         addProductToArray(newProduct);
         System.out.println("-Product Successfully Added!-");
     }
-
 
 
 
