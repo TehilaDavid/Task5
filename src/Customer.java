@@ -75,7 +75,7 @@ public class Customer {
         this.dateOfLastPurchase = dateOfLastPurchase;
     }
 
-    public void calculatePrice (){
+    public double calculatePrice (){
         double priceProduct;
         double sumProducts = 0;
         boolean isClubMember = this.isClubMember;
@@ -90,7 +90,7 @@ public class Customer {
                 sumProducts += priceProduct;
             }
         }
-        this.shoppingCart.setTotalPrice(sumProducts);
+        return sumProducts;
     }
 
     public String toString (){

@@ -17,29 +17,15 @@ public class Employee extends Customer{
         return rank;
     }
 
-    public void calculatePrice (){
-        double price = 0;
-        double sum = 0;
-        boolean isClubMember = this.isClubMember();
-        for (int i = 0; i < this.getShoppingCart().getProducts().length; i++) {
-            Product currentProduct = this.getShoppingCart().getProducts()[i];
-            price = 0;
-            price += currentProduct.getPrice();
-
-            if (isClubMember) {
-                double discount = currentProduct.getDiscountPercentages();
-                sum += (price * ((100 - discount)/100));
-            } else {
-                sum += price;
-            }
-        }
+    public double calculatePrice (){
+        double sumProducts = super.calculatePrice();
         if (this.getRank() == REGULAR_EMPLOYEE_RANK){
-            sum = sum * THE_PERCENTAGE_A_REGULAR_EMPLOYEE_PAYS;
+            sumProducts = sumProducts * THE_PERCENTAGE_A_REGULAR_EMPLOYEE_PAYS;
         }else  if (this.getRank() == DIRECTOR_RANK) {
-            sum = sum * THE_PERCENTAGE_A_DIRECTOR_PAYS;
+            sumProducts = sumProducts * THE_PERCENTAGE_A_DIRECTOR_PAYS;
         }else {
-            sum = sum * THE_PERCENTAGE_A_MEMBER_OF_THE_MANAGEMENT_TEAM_PAYS;
+            sumProducts = sumProducts * THE_PERCENTAGE_A_MEMBER_OF_THE_MANAGEMENT_TEAM_PAYS;
         }
-        this.getShoppingCart().setTotalPrice(sum);
+        return sumProducts;
     }
 }

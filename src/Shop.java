@@ -168,7 +168,8 @@ public class Shop {
             for (int i = 0; i < productAmount; i++) {
                 customer.setShoppingCart(productsInStock[productNumber - 1]);
             }
-            customer.calculatePrice();
+            double price = customer.calculatePrice();
+            customer.getShoppingCart().setTotalPrice(price);
         }
         System.out.println(customer.getShoppingCart());
         return productNumber;
