@@ -1,6 +1,8 @@
 import java.util.Date;
 import java.util.Scanner;
 
+// יאללה זהווו בעז"ה
+
 public class Main {
     private static final int SIGN_UP = 1;
     private static final int SIGN_IN = 2;

@@ -281,23 +281,26 @@ public class Shop {
     }
 
     private Product[] printAndGetProductInStock() {
-        Product[] productsInStock = new Product[this.products.length];
         System.out.println("A List Of Products In Stock ------");
         int counter = 1;
         for (int i = 0; i < this.products.length; i++) {
             if (this.products[i].isInStock()) {
-                System.out.print(counter + ". ");
-                System.out.println(this.products[i]);
-                productsInStock[counter - 1] = this.products[i];
                 counter++;
             }
         }
-        Product[] productsInStockWithoutNull = new Product[counter - 1];
-        for (int i = 0; i < productsInStockWithoutNull.length; i++) {
-            productsInStockWithoutNull[i] = productsInStock[i];
+
+        Product[] productsInStock = new Product[counter - 1];
+        counter = 1;
+        for (int i = 0; i < productsInStock.length; i++) {
+            if (this.products[i].isInStock()) {
+                System.out.print(counter + ". ");
+                System.out.println(this.products[i]);
+                productsInStock[i] = this.products[i];
+                counter++;
+            }
         }
         System.out.println("-------------------");
-        return productsInStockWithoutNull;
+        return productsInStock;
     }
 
     private boolean isEmployeeUsernameExist(String username) {
