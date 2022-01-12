@@ -50,24 +50,21 @@ public class Shop {
             isCostumer = false;
         }
 
-        //הסקנר הבא לא עובד בלי זה משום מה, הוא מדלג על הראשון
-        username = scanner.nextLine();
-
-
+        Scanner scanner1 = new Scanner(System.in);
         do {
             System.out.println("Enter your first name: ");
-            firstName = scanner.nextLine();
+            firstName = scanner1.nextLine();
         } while (hasDigit(firstName));
 
         do {
             System.out.println("Enter your last Name : ");
-            lastName = scanner.nextLine();
+            lastName = scanner1.nextLine();
         } while (hasDigit(lastName));
 
 
         do {
             System.out.println("Enter username: ");
-            username = scanner.nextLine();
+            username = scanner1.nextLine();
             if (isCostumer) {
                 usernameIsExist = isCustomerUsernameExist(username);
             } else {
@@ -81,12 +78,12 @@ public class Shop {
 
         do {
             System.out.println("Enter password with 6 chars: ");
-            password = scanner.nextLine();
+            password = scanner1.nextLine();
         } while (password.length() < 6);
 
         do {
             System.out.println("If you are a club member tap 1 if you do not tap 2");
-            clubMemberChoice = scanner.nextInt();
+            clubMemberChoice = scanner1.nextInt();
         } while (clubMemberChoice != 1 && clubMemberChoice != 2);
 
         if (clubMemberChoice == 1) {
@@ -159,7 +156,6 @@ public class Shop {
                 customer.setShoppingCart(productsInStock[productNumber - 1]);
             }
             customer.calculatePrice();
-            customer.getShoppingCart().getTotalPrice();
         }
         System.out.println(customer.getShoppingCart());
 
@@ -168,20 +164,28 @@ public class Shop {
     }
 
     public void printCustomerWithTheTopDollar (){
-        Customer topDollarCustomer = this.customers[0];
+        if (this.customers.length != 0){
+            Customer topDollarCustomer = this.customers[0];
 
-        for (int i = 0; i < this.customers.length ; i++) {
-            if (this.customers[i].getSumPurchases() > topDollarCustomer.getSumPurchases()) {
-                topDollarCustomer = this.customers[i];
+            for (int i = 0; i < this.customers.length ; i++) {
+                if (this.customers[i].getSumPurchases() > topDollarCustomer.getSumPurchases()) {
+                    topDollarCustomer = this.customers[i];
+                }
             }
+            System.out.println("the customer with the top dollar purchase is: " + topDollarCustomer.getFirstName() + " " + topDollarCustomer.getLastName());
+        }else {
+            System.out.println("there is no costumers");
         }
-        System.out.println("the customer with the top dollar purchase is: " + topDollarCustomer.getFirstName() + " " + topDollarCustomer.getLastName());
     }
 
     public void printAllCustomers() {
-        for (int i = 0; i < this.customers.length; i++) {
-            System.out.println(i + 1);
-            System.out.println(this.customers[i]);
+        if (this.customers.length != 0){
+            for (int i = 0; i < this.customers.length; i++) {
+                System.out.println(i + 1);
+                System.out.println(this.customers[i]);
+            }
+        } else {
+            System.out.println("there is no costumers");
         }
     }
 
@@ -239,16 +243,23 @@ public class Shop {
         System.out.println("Please enter the product's description: ");
         description = scanner.nextLine();
 
-        System.out.println("Please enter the product's price: ");
-        price = scanner.nextInt();
+        do {
+            System.out.println("Please enter the product's price: ");
+            price = scanner.nextInt();
+        }while (price <= 0);
 
-        System.out.println("Enter the discount Percentages for club members:  ");
-        discountPercentages = scanner.nextDouble();
+        do {
+            System.out.println("Enter the discount Percentages for club members:  ");
+            discountPercentages = scanner.nextDouble();
+        }while (discountPercentages < 0);
 
         Product newProduct = new Product(description,price,discountPercentages);
         addProductToArray(newProduct);
         System.out.println("-Product Successfully Added!-");
     }
+
+
+
 
     private void addProductToArray (Product productToAdd) {
         Product[] newProductArray = new Product[products.length + 1];
@@ -257,11 +268,7 @@ public class Shop {
         }
         newProductArray[this.products.length] = productToAdd;
         this.products = newProductArray;
-
     }
-
-
-
 
     private Product[] printAndGetProductInStock() {
         Product[] productsInStock = new Product[this.products.length];
@@ -335,10 +342,4 @@ public class Shop {
         newCustomerArray[this.customers.length] = customerToAdd;
         this.customers = newCustomerArray;
     }
-
-    public Customer[] getCustomers (){
-        return this.customers;
-    }
-
-
 }

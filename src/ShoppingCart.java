@@ -1,6 +1,6 @@
 public class ShoppingCart {
     private Product[] products;
-    double totalPrice;
+    private double totalPrice;
 
     public ShoppingCart (){
         this.products = new Product[0];
