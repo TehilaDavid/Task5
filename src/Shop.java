@@ -22,23 +22,15 @@ public class Shop {
     private Product[] products;
 
     public Shop() {
-//        this.employees = new Employee[0];
-//        this.customers = new Customer[0];
-//        this.products = new Product[0];
 
-        Customer customer1 = new Customer("Tehila", "Karavani", "tehila", "555555", true);
-        Employee employee1 = new Employee("Tehila", "David", "tehila1", "555555", false, 3);
-        Product product1 = new Product("milk", 4, 30);
-        Product product2 = new Product("bred", 10, 20);
-        Product product3 = new Product("water", 8, 15);
-        Customer[] customers1 = {customer1};
-        Employee[] employees1 = {employee1};
-        Product[] products1 = {product1, product2, product3};
-        this.customers = customers1;
-        this.employees = employees1;
-        this.products = products1;
+        this.employees = new Employee[0];
+        this.customers = new Customer[0];
+        this.products = new Product[0];
     }
 
+    public Product[] getProducts() {
+        return products;
+    }
 
     public void crateAccount() {
         Scanner scanner = new Scanner(System.in);
@@ -179,14 +171,14 @@ public class Shop {
         if (this.customers.length != 0){
             Customer topDollarCustomer = this.customers[0];
 
-            for (int i = 0; i < this.customers.length ; i++) {
+            for (int i = 1; i < this.customers.length ; i++) {
                 if (this.customers[i].getSumPurchases() > topDollarCustomer.getSumPurchases()) {
                     topDollarCustomer = this.customers[i];
                 }
             }
-            System.out.println("the customer with the top dollar purchase is: " + topDollarCustomer.getFirstName() + " " + topDollarCustomer.getLastName());
+            System.out.println("the customer with the top dollar purchase is: " + topDollarCustomer.getFirstName() + " " + topDollarCustomer.getLastName() + "\n");
         }else {
-            System.out.println("there is no costumers");
+            System.out.println("there is no costumers\n");
         }
     }
 
@@ -230,7 +222,7 @@ public class Shop {
             System.out.println((i + 1) + ". " + this.products[i]);
         }
         do {
-            System.out.println("\nEnter the number of the product you want to change its status to: ");
+            System.out.println("Enter the number of the product you want to change its status to: ");
             indexOfTheProductToChange = scanner.nextInt();
         }while (indexOfTheProductToChange > this.products.length || indexOfTheProductToChange < 1);
 

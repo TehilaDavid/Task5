@@ -98,8 +98,11 @@ public class Customer {
         if (this.isClubMember) {
             output += " (VIP)";
         }
-        output += "\nThe amount of purchases: " + this.getNumberOfPurchase() + "\nThe sum of all the purchases he made: " + this.sumPurchases +
-                "\nLast purchase date made: " + this.dateOfLastPurchase + "\n";
+        output += "\nThe amount of purchases: " + this.getNumberOfPurchase() + "\nThe sum of all the purchases he made: " + this.sumPurchases;
+        if (this.getNumberOfPurchase() != 0){
+            output += "\nLast purchase date made: " + this.dateOfLastPurchase;
+        }
+        output += "\n";
         return output;
     }
 

@@ -1,8 +1,6 @@
 import java.util.Date;
 import java.util.Scanner;
 
-// יאללה זהווו בעז"ה
-
 public class Main {
     private static final int SIGN_UP = 1;
     private static final int SIGN_IN = 2;
@@ -72,17 +70,20 @@ public class Main {
                         }
 
 
-                        int customerChoice2;
-                        do {
-                            customerChoice2 = shop.purchase(loggedCustomer);
-                            if (customerChoice2 == COMPLETION_OF_PURCHASE && loggedCustomer.getShoppingCart().getTotalPrice() != 0) {
-                                loggedCustomer.addToSumPurchases(loggedCustomer.getShoppingCart().getTotalPrice());
-                                loggedCustomer.purchaseReset();
-                                Date dateOfAcquisition = new Date();
-                                loggedCustomer.setDateOfLastPurchase(dateOfAcquisition);
-                            }
-                        } while (customerChoice2 != COMPLETION_OF_PURCHASE);
-
+                        if (shop.getProducts().length == 0) {
+                            System.out.println("There are no products in stock");
+                        }else {
+                            int customerChoice2;
+                            do {
+                                customerChoice2 = shop.purchase(loggedCustomer);
+                                if (customerChoice2 == COMPLETION_OF_PURCHASE && loggedCustomer.getShoppingCart().getTotalPrice() != 0) {
+                                    loggedCustomer.addToSumPurchases(loggedCustomer.getShoppingCart().getTotalPrice());
+                                    loggedCustomer.purchaseReset();
+                                    Date dateOfAcquisition = new Date();
+                                    loggedCustomer.setDateOfLastPurchase(dateOfAcquisition);
+                                }
+                            } while (customerChoice2 != COMPLETION_OF_PURCHASE);
+                        }
 
                     }
                 } else {
