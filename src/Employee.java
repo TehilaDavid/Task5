@@ -5,8 +5,8 @@ public class Employee extends Customer{
     private static final int REGULAR_EMPLOYEE_RANK = 1;
     private static final int DIRECTOR_RANK = 2;
 
-
     private int rank;
+
 
     public Employee(String firstName, String lastName, String username, String password, boolean isClubMember, int rank) {
         super(firstName, lastName, username, password, isClubMember);
@@ -27,5 +27,16 @@ public class Employee extends Customer{
             sumProducts = sumProducts * THE_PERCENTAGE_A_MEMBER_OF_THE_MANAGEMENT_TEAM_PAYS;
         }
         return sumProducts;
+    }
+
+    public void helloMessage () {
+        super.helloMessage();
+        if (this.rank == REGULAR_EMPLOYEE_RANK) {
+            System.out.println(" (Regular employee)!");
+        }else if (this.rank == DIRECTOR_RANK) {
+            System.out.println(" (Director)!");
+        }else {
+            System.out.println(" (member of the management team)!");
+        }
     }
 }

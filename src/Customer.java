@@ -93,6 +93,15 @@ public class Customer {
         return sumProducts;
     }
 
+    public void helloMessage () {
+        System.out.print("Hello " + this.firstName + " " + this.lastName);
+        if (this.isClubMember) {
+            System.out.print(" (VIP)!");
+        } else {
+            System.out.print(" !");
+        }
+    }
+
     public String toString (){
         String output = this.firstName + " " + this.lastName;
         if (this.isClubMember) {

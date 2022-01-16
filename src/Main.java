@@ -8,8 +8,6 @@ public class Main {
     private static final int SIGN_IN_CUSTOMER = 1;
     private static final int SIGN_IN_EMPLOYEE = 2;
     private static final int COMPLETION_OF_PURCHASE = -1;
-    private static final int REGULAR_EMPLOYEE_RANK = 1;
-    private static final int DIRECTOR_RANK = 2;
     private static final int PRINT_ALL_CUSTOMERS = 1;
     private static final int PRINT_CLUB_MEMBER_CUSTOMER = 2;
     private static final int PRINT_CUSTOMER_WITH_AN_LEAST_ONE_PURCHASE = 3;
@@ -62,27 +60,22 @@ public class Main {
                     if (loggedCustomer == null) {
                         System.out.println("Login failed, The username or password is incorrect");
                     } else {
-                        System.out.print("Hello " + loggedCustomer.getFirstName() + " " + loggedCustomer.getLastName());
-                        if (loggedCustomer.isClubMember()) {
-                            System.out.println(" (VIP)!");
-                        } else {
-                            System.out.println(" !");
-                        }
-
+                        loggedCustomer.helloMessage();
+                        System.out.println();
 
                         if (shop.getProducts().length == 0) {
                             System.out.println("There are no products in stock");
                         }else {
-                            int customerChoice2;
+                            int customerProductChoice;
                             do {
-                                customerChoice2 = shop.purchase(loggedCustomer);
-                                if (customerChoice2 == COMPLETION_OF_PURCHASE && loggedCustomer.getShoppingCart().getTotalPrice() != 0) {
+                                customerProductChoice = shop.purchase(loggedCustomer);
+                                if (customerProductChoice == COMPLETION_OF_PURCHASE && loggedCustomer.getShoppingCart().getTotalPrice() != 0) {
                                     loggedCustomer.addToSumPurchases(loggedCustomer.getShoppingCart().getTotalPrice());
                                     loggedCustomer.purchaseReset();
                                     Date dateOfAcquisition = new Date();
                                     loggedCustomer.setDateOfLastPurchase(dateOfAcquisition);
                                 }
-                            } while (customerChoice2 != COMPLETION_OF_PURCHASE);
+                            } while (customerProductChoice != COMPLETION_OF_PURCHASE);
                         }
 
                     }
@@ -91,14 +84,7 @@ public class Main {
                     if (loggedEmployee == null) {
                         System.out.println("Login failed, The username or password is incorrect");
                     } else {
-                        System.out.print("Hello " + loggedEmployee.getFirstName() + " " + loggedEmployee.getLastName() + " (");
-                        if (loggedEmployee.getRank() == REGULAR_EMPLOYEE_RANK) {
-                            System.out.println("Regular employee)!");
-                        }else if (loggedEmployee.getRank() == DIRECTOR_RANK) {
-                            System.out.println("Director)!");
-                        }else {
-                            System.out.println("member of the management team)!");
-                        }
+                        loggedEmployee.helloMessage();
 
                         do {
                             do {
@@ -112,7 +98,7 @@ public class Main {
                                         "\n" + "7- Making a purchase" +
                                         "\n" + "8- Disconnect and return to the main menu");
                                 Scanner scanner2 = new Scanner(System.in);
-                                employeeChoice = scanner.nextInt();
+                                employeeChoice = scanner2.nextInt();
                             } while (employeeChoice > 8 || employeeChoice < 1);
 
 
@@ -136,13 +122,13 @@ public class Main {
                                     shop.changeIsInStock();
                                     break;
                                 case MAKING_A_PURCHASE:
-                                    int customerChoice2;
+                                    int employeeProductChoice;
                                     do {
-                                        customerChoice2 = shop.purchase(loggedEmployee);
-                                        if (customerChoice2 == COMPLETION_OF_PURCHASE && loggedEmployee.getShoppingCart().getTotalPrice() != 0) {
+                                        employeeProductChoice = shop.purchase(loggedEmployee);
+                                        if (employeeProductChoice == COMPLETION_OF_PURCHASE && loggedEmployee.getShoppingCart().getTotalPrice() != 0) {
                                             loggedEmployee.purchaseReset();
                                         }
-                                    } while (customerChoice2 != COMPLETION_OF_PURCHASE);
+                                    } while (employeeProductChoice != COMPLETION_OF_PURCHASE);
                                     break;
                                 case RETURN_TO_THE_MAIN_MENU:
                                     break;

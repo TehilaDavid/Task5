@@ -11,8 +11,8 @@ public class Shop {
     private static final int COMPLETION_OF_PURCHASE = -1;
     private static final int PRODUCT_IN_STOCK = 1;
     private static final int PRODUCT_NOT_IN_STOCK = 2;
-    private static final int MIN_PRICE = 0;
-    private static final int MIN_PRODUCT_AMOUNT = 0;
+    private static final int MIN_PRODUCT_PRICE = 1;
+    private static final int MIN_PRODUCT_AMOUNT = 1;
     private static final int MIN_PROPER_DISCOUNT = 0;
     private static final int MAX_PROPER_DISCOUNT = 100;
 
@@ -22,7 +22,6 @@ public class Shop {
     private Product[] products;
 
     public Shop() {
-
         this.employees = new Employee[0];
         this.customers = new Customer[0];
         this.products = new Product[0];
@@ -155,13 +154,13 @@ public class Shop {
             do {
                 System.out.println("please enter the amount: ");
                 productAmount = scanner.nextInt();
-            } while (productAmount <= MIN_PRODUCT_AMOUNT);
+            } while (productAmount < MIN_PRODUCT_AMOUNT);
 
             for (int i = 0; i < productAmount; i++) {
                 customer.setShoppingCart(productsInStock[productNumber - 1]);
             }
-            double price = customer.calculatePrice();
-            customer.getShoppingCart().setTotalPrice(price);
+            double shoppingCartPrice = customer.calculatePrice();
+            customer.getShoppingCart().setTotalPrice(shoppingCartPrice);
         }
         System.out.println(customer.getShoppingCart());
         return productNumber;
@@ -241,7 +240,7 @@ public class Shop {
     public void addNewProduct (){
         Scanner scanner = new Scanner(System.in);
         String description;
-        int price;
+        int productPrice;
         double discountPercentages;
 
         System.out.println("Please enter the product's description: ");
@@ -249,15 +248,15 @@ public class Shop {
 
         do {
             System.out.println("Please enter the product's price: ");
-            price = scanner.nextInt();
-        }while (price <= MIN_PRICE);
+            productPrice = scanner.nextInt();
+        }while (productPrice < MIN_PRODUCT_PRICE);
 
         do {
             System.out.println("Enter the discount Percentages for club members:  ");
             discountPercentages = scanner.nextDouble();
         }while (discountPercentages < MIN_PROPER_DISCOUNT || discountPercentages > MAX_PROPER_DISCOUNT);
 
-        Product newProduct = new Product(description,price,discountPercentages);
+        Product newProduct = new Product(description,productPrice,discountPercentages);
         addProductToArray(newProduct);
         System.out.println("-Product Successfully Added!-");
     }
